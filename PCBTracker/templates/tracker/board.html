@@ -1,0 +1,205 @@
+{% extends "base_skeleton.html" %}
+
+{% block styles %}
+    div#newlocation {
+        display:none;
+        margin-left:2em;
+        margin-top:1em;
+    }
+    div#newevent {
+        display:none;
+        margin-left:2em;
+        margin-top:1em;
+    }
+{% endblock %}
+
+{% block script %}
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $("a#newlocationbtn").click(function(){
+        if ("{{ username }}" != "None") {
+            $("div#newlocation").slideToggle("fast");
+        } else {
+            alert("Please log in first!");
+        }
+    });
+
+    $("a#neweventbtn").click(function(){
+        if ("{{ username }}" != "None") {
+            $("div#newevent").slideToggle("fast");
+        } else {
+            alert("Please log in first!");
+        }
+    });
+
+    $("h2#boarddetails").click(function(){
+        $("div#boarddetails").slideToggle("fast");
+    });
+    $("h2#boardevents").click(function(){
+        $("div#boardevents").slideToggle("fast");
+    });
+    $("h2#boardpatchhistory").click(function(){
+        $("div#boardpatchhistory").slideToggle("fast");
+    });
+    $("h2#boardlocation").click(function(){
+        $("div#boardlocation").slideToggle("fast");
+    });
+});
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+<h1><a href="{% url 'PCBTracker.views.boards' board.classid.id %}">{{ board.classid.name }} {{ board.csnr }}</a></h1>
+
+<h2 id="boarddetails"><div class="mousepointer">Details for {{ board.classid.name }} {{ board.csnr }}:</div></h2>
+<div class="board" id="boarddetails">
+    <table>
+        <tr>
+            <td><b>Product-Nr.</b></td>
+            <td>{{ board.classid.productnr }}{{ board.revision }}</td>
+        </tr>
+        <tr>
+            <td><b>Top-serial</b></td>
+            <td>{{ board.serial_top }}</td>
+        </tr>
+
+        <tr>
+            <td><b>Bottom-serial</b></td>
+            <td>{{ board.serial_bottom }}</td>
+        </tr>
+
+        <tr>
+            <td><b>Comment</b></td>
+            <td>{{ board.comment }}</td>
+        </tr>
+
+        <tr>
+            <td><b>Defect?</b></td>
+        {% if board.defect %}
+            <td>Yes</td>
+        {% else %}
+            <td>No</td>
+        {% endif %}
+        </tr>
+
+        <tr>
+            <td><b>SW-Version</b></td>
+            <td>{{ board.swversion }}</td>
+        </tr>
+        <tr>
+            <td><b>Attachment</b></td>
+            {% if board.attachment %}
+            <td><a href="{{ board.attachment.url }}">{{ board.attachment.name }}</a></td>
+            {% else %}
+            <td>-</td>
+            {% endif %}
+        </tr>
+    </table>
+
+    <a class="btn btn-default" href="{% url 'PCBTracker.views.edit_board' board.id %}">Edit</a>
+</div>
+
+<h2 id="boardevents"><div class="mousepointer">Events for {{ board.classid.name }} {{ board.csnr }}:</div></h2>
+<div class="board" id="boardevents">
+    <table>
+        <tr>
+            <td id="tablelegend">Date</td>
+            <td id="tablelegend">Author</td>
+            <td id="tablelegend">Event</td>
+        </tr>
+    {% for e in events %}
+        <tr>
+            <td><b>{{ e.date }}</b></a></td>
+            <td>{{ e.author }}</td>
+            <td>{{ e.desc }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+
+    <a class="btn btn-default" id="neweventbtn">
+    Create Event
+    </a>
+
+    <div id="newevent">
+        <form method="post" action="{% url 'PCBTracker.views.add_event' board.id %}">
+        {% csrf_token %}
+        <table>
+        <tr>
+            <td>{{ eventform.desc }}</td>
+            <td>{{ eventform.desc.label_tag }}</td>
+        </tr>
+        </table>
+
+        <input type="submit" value="Save event">
+        </form>
+    </div>
+</div>
+
+<h2 id="boardlocation"><div class="mousepointer">Locations for {{ board.classid.name }} {{ board.csnr }}:</div></h2>
+<div class="board" id="boardlocation">
+    <table>
+        <tr>
+            <td id="tablelegend">Date</td>
+            <td id="tablelegend">Location</td>
+        </tr>
+    {% for l in locations %}
+        <tr>
+            <td><b>{{ l.date }}</b></a></td>
+            <td>{{ l.location }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+
+    <a class="btn btn-default" id="newlocationbtn">
+    Change Location
+    </a>
+    or
+    <a class="btn btn-default" href="/claim/{{ board.id }}/">Claim board</a>
+    <div id="newlocation">
+        <form method="post" action="{% url 'PCBTracker.views.add_location' board.id %}">
+        {% csrf_token %}
+        <table>
+        <tr>
+            <td>{{ locationform.location }}</td>
+            <td>{{ locationform.location.label_tag }}</td>
+        </tr>
+        </table>
+
+        <input type="submit" value="Save location">
+        </form>
+    </div>
+</div>
+
+<h2 id="boardpatchhistory"><div class="mousepointer">Patch-History for {{ board.classid.name }} {{ board.csnr }}:</div></h2>
+<div class="board" id="boardpatchhistory">
+<table>
+    {% for p in patches %}
+    <td style="width:50px" id="tablelegend">
+        <div class="qtiptooltip" id="qtiptooltip">
+            <a href="/patch/{{p.id}}/"><b>{{ p.name|truncatechars:15 }}</b></a>
+            <span class="qtiptooltip" style="display:none">{{ p.name }}</span>
+        </div>
+    </td>
+    {% endfor %}
+    <td style="width:60px" id="tablelegend">Location</td>
+    <td style="width:85px" id="tablelegend">Last change by</td>
+    <td style="width:140px" id="tablelegend">Last change at</td>
+    <td style="width:60" id="tablelegend">Export</td>
+{% for s in states %}
+<tr>
+    {% for p in s.p %}
+        <td>{{ p }}</td>
+    {% endfor %}
+    <td><div class="qtiptooltip" id="qtiptooltip">{{ s.s.location|truncatechars:10 }}<span class="qtiptooltip" style="display:none">{{ s.s.location }}</span></div></td>
+    <td><div class="qtiptooltip" id="qtiptooltip">{{ s.s.author|truncatechars:13 }}<span class="qtiptooltip" style="display:none">{{ s.s.author }}</span></div></td>
+    <td><a class="btn btn-default" href="{% url 'PCBTracker.views.export_patches' s.id %}">Export</a></td>
+    <td>{{ s.s.date }}</td>
+</tr>
+{% endfor %}
+</table>
+</div>
+
+{% endblock %}

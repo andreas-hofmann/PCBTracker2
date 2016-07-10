@@ -1,0 +1,41 @@
+{% extends "base_skeleton.html" %}
+
+{% block content %}
+
+<form method="post" action="{% url 'PCBTracker.views.do_register' %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="id_username">Username *</label>
+        <input type="text" class="form-control" name="username" id="id_username">
+    </div>
+    <div class="form-group">
+        <label for="id_email">E-Mail *</label>
+        <input type="email" class="form-control" name="email" id="id_email">
+    </div>
+    <div class="form-group">
+        <label for="id_firstname">First name</label>
+        <input type="text" class="form-control" name="firstname" id="id_firstname">
+    </div>
+    <div class="form-group">
+        <label for="id_lastname">Last name</label>
+        <input type="text" class="form-control" name="lastname" id="id_lastname">
+    </div>
+    <div class="form-group">
+        <label for="id_password">Password *</label>
+        <input type="password" class="form-control" name="password" id="id_password">
+    </div>
+    <div class="form-group">
+        <label for="id_password2">Password (confirmation) *</label>
+        <input type="password" class="form-control" name="password2"  id="id_password2">
+    </div>
+    <button type="submit" class="btn btn-default" value="Register">Register</button>
+    <input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+{% if error %}
+<p><span class="label label-danger">Error: {{ error }}</span></p>
+{% endif %}
+
+Note: Fields marked with a * are required.
+
+{% endblock %}

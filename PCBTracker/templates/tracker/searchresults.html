@@ -1,0 +1,60 @@
+{% extends "base_skeleton.html" %}
+
+{% block styles %}
+    div#searchresults {
+        margin-left:2em;
+    }
+{% endblock %}
+
+{% block script %}
+{% endblock %}
+
+{% block content %}
+
+<h3>Search results for '{{ searchstring }}':</h3>
+
+<p id="searchresults_patches">
+    {% if results_patches %}
+        Matches for Patch: <br>
+        {% for r in results_patches %}
+        <a href={% url 'PCBTracker.views.patch' r.id %} >{{ r }}</a><br>
+        {% endfor %}
+    {% else %}
+        No patches found.
+    {% endif %}
+</p>
+
+<p id="searchresults_projects">
+    {% if results_projects %}
+        Matches for Project:<br>
+        {% for r in results_projects %}
+        <a href={% url 'PCBTracker.views.board' r.id %} >{{ r }}</a><br>
+        {% endfor %}
+    {% else %}
+        No projects found.
+    {% endif %}
+</p>
+
+<p id="searchresults_boardclasses">
+    {% if results_boardclasses %}
+        Matches for BoardClass:<br>
+        {% for r in results_boardclasses %}
+        <a href={% url 'PCBTracker.views.board' r.id %} >{{ r }}</a><br>
+        {% endfor %}
+    {% else %}
+        No boardclasses found.
+    {% endif %}
+</p>
+
+<p id="searchresults_boards">
+    {% if results_boards %}
+        Matches for Board:<br>
+        {% for r in results_boards %}
+        <a href={% url 'PCBTracker.views.board' r.id %} >{{ r }}</a><br>
+        {% endfor %}
+    {% else %}
+        No boards found.
+    {% endif %}
+</p>
+
+{% endblock %}

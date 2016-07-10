@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+{% load staticfiles %}
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/basic/jquery.qtip.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/basic/jquery.qtip.min.css" type="text/css" rel="stylesheet" />
+
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+<script type="text/javascript" src="http://coffeescript.org/extras/coffee-script.js"></script>
+
+<script type="text/coffeescript" src="{% static 'tracker.coffee' %}"></script>
+<link rel="stylesheet" href="{% static 'tracker.css' %}">
+
+<script language="JavaScript">
+    $(document).ready( function() {
+        $('.qtiptooltip[id="qtiptooltip"]').each( function() {
+            $(this).qtip({
+                content: $(this).find('span.qtiptooltip'),
+                hide: {
+                    fixed: true,
+                    delay: 50
+                }
+            });
+        });
+    });
+</script>
+
+{% block script %}{% endblock %}
+
+<title>PCBTracker2</title>
+
+<style type="text/css">
+{% block styles %}{% endblock %}
+</style>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse navbar-static-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/main/">PCBTracker2</a>
+    </div>
+
+    <div class="navbar-btn navbar-right">
+      {% if username %}
+      <a class="btn btn-success" id="logout" href="/logout/">Logout {{ username }}</a>
+      {% else %}
+      <a class="btn btn-primary" id="login" href="/login/#">Login</a>
+      <a class="btn btn-primary" href="/register/">Register</a>
+      {% endif %}
+    </div>
+
+    <form class="navbar-form navbar-right" role="search" method="post" action="{% url 'PCBTracker.views.search' %}">
+      {% csrf_token %}
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search">
+        <input type="hidden" name="searchstring" value="True" />
+        <input type="hidden" name="search_boardname" value="True" />
+        <input type="hidden" name="search_projectname" value="True" />
+        <input type="hidden" name="search_projectname" value="True" />
+        <input type="hidden" name="search_serial" value="True" />
+        <input type="hidden" name="search_productnr" value="True" />
+        <input type="hidden" name="search_patchnr" value="True" />
+      </div>
+      <button type="submit" class="btn btn-default">Go</button>
+    </form>
+  </div>
+  </nav>
+
+  <div class="container-fluid content" id="main">
+  {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

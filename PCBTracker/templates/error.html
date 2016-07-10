@@ -1,0 +1,10 @@
+{% extends "base_skeleton.html" %}
+
+{% block content %}
+
+<p>
+<p><span class="label label-danger">{{ error }}</span></p>
+</p>
+<form><input type="button" value="Back" onClick="history.go(-1);return true;"></form>
+
+{% endblock %}

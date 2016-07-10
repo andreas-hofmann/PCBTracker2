@@ -1,0 +1,48 @@
+{% extends "base_skeleton.html" %}
+
+{% block content %}
+
+<h2>History for <a href="{% url 'PCBTracker.views.boards' boardclass.id %}">{{ boardclass.name }}</a>-patch {{ patch }}:</h2>
+<ul>
+    <table>
+    <tr>
+        <td style="widtd:140" id="tablelegend">Changed on</td>
+        <td style="widtd:85" id="tablelegend">Author</td>
+        <td id="tablelegend">Description</td>
+        <td id="tablelegend">Why?</td>
+        <td style="widtd:35px" id="tablelegend">Rev</td>
+        <td style="widtd:70px" id="tablelegend">Mantis link</td>
+        <td style="widtd:70px" id="tablelegend">Mandatory?</td>
+        <td style="widtd:70px" id="tablelegend">Attachment</td>
+    </tr>
+    {% for d in descs %}
+    <tr>
+        <td>{{ d.date }}</td>
+        <td><div class="qtiptooltip" id="qtiptooltip">{{ d.author|truncatechars:13 }}<span class="qtiptooltip" style="display:none">{{ d.author }}</span></div></td>
+        <td>{{ d.desc }}</td>
+        <td>{{ d.why }}</td>
+        <td>{{ d.revision }}</td>
+        <td>{{ d.mantis }}</td>
+        <td>
+            {% if d.is_mandatory %}
+            <div class="yellow"> Yes </div>
+            {% else %}
+            <div> No </div>
+            {% endif %}
+        </td>
+        <td>
+            {% if d.attachment %}
+            <div class="qtiptooltip" id="qtiptooltip">
+                <a href="{{ d.attachment.url }}">{{ d.attachment.name|truncatechars:12 }}</a>
+                <span class="qtiptooltip" style="display:none">{{ d.attachment.name }}</span>
+            </div>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    </table>
+</ul>
+
+<a class="btn btn-default" href="/patch/edit/{{ patch.id }}/">Edit patch</a>
+
+{% endblock %}

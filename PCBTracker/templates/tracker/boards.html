@@ -1,0 +1,106 @@
+{% extends "base_skeleton.html" %}
+
+{% block content %}
+
+<h2>Known {{ boardclass.name }}-Boards:</h2>
+
+<table class="boardsoverview boards" border="0">
+{% for y in board_table %}
+<tr>
+    {% for x in y %}
+        <td {% if forloop.counter == 1 %} id="tablelegend_left" {% endif %} >
+            {% if x.patch %}
+                <div class="qtiptooltip" id="qtiptooltip">
+                    <a href="/patch/{{ x.patch.id }}/"><b>{{ x.patch.name|truncatechars:20 }}</b><span class="qtiptooltip" style="display:none">{{ x.patch.name }}</span></a>
+                </div>
+            {% else %}
+                {% if x.status %}
+                    {% if not x.latest %} <div class="oldpatch qtiptooltip" id="qtiptooltip"> {% endif %}
+                    <input type="button" id="b{{ x.b_id }}_p{{ x.p_id }}" value="{{ x.status }}"
+                        onclick="update_patch_status('{{ x.b_id }}', '{{ x.p_id }}');">
+                    </input>
+                    {% if not x.latest %} <span class="qtiptooltip" style="display:none">Old patch revision! Click to set newest revision for this board.</span></div> {% endif %}
+                {% else %}
+                    {% if x.csnr %}
+                        {% if x.defect %}
+                        <a class="patch" href="/board/detail/{{x.id}}/"><b>{{ x.csnr }}</b></a><br>
+                        <div class="red qtiptooltip" id="qtiptooltip">
+                            Defect<span class="qtiptooltip" style="display:none">Board is marked as defect</span>
+                        </div>
+                        {% elif not x.is_runnable %}
+                        <a class="patch" href="/board/detail/{{x.id}}/"><b>{{ x.csnr }}</b></a><br>
+                        <div class="yellow qtiptooltip" id="qtiptooltip">
+                            Patch<span class="qtiptooltip" style="display:none">Board is missing a mandatory patch</span>
+                        </div>
+                        {% else %}
+                        <a class="patch" href="/board/detail/{{x.id}}/"><b>{{ x.csnr }}</b></a><br>
+                        <div class="qtiptooltip" id="qtiptooltip">
+                            &nbsp;<span class="qtiptooltip" style="display:none">Board should be runnable</span>
+                        </div>
+                        {% endif %}
+                    {% elif x.url %}
+                        <a href={{ x.url }}>Link</a>
+                    {% else %}
+                        <div class="qtiptooltip" id="qtiptooltip">{{ x|truncatechars:10 }}<span class="qtiptooltip" style="display:none">{{ x }}</span></div>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        </td>
+    {% endfor %}
+</tr>
+{% endfor %}
+</table>
+
+<p>
+<a class="btn btn-default" href="{% url 'PCBTracker.views.add_board' boardclass.id %}">New Board</a>
+</p>
+
+<h2>Patch descriptions:</h2>
+<table class="boardsoverview patches" border="0">
+    <tr>
+        <th style="width:150px" id="tablelegend">Name</th>
+        <th id="tablelegend">Description</th>
+        <th id="tablelegend">Why?</th>
+        <th style="width:40px" id="tablelegend">Rev</th>
+        <th style="width:70px" id="tablelegend">Bugtracker link</th>
+        <th style="width:80px" id="tablelegend">Last edit by</th>
+        <th style="width:70px" id="tablelegend">Mandatory?</th>
+        <th style="width:70px" id="tablelegend">Attachment</th>
+    </tr>
+    {% for p in patchdescs %}
+    <tr>
+        <td><a id="qtiptooltip" class="qtiptooltip" href="/patch/{{p.patch.id}}/"><b>{{ p.patch.name|truncatechars:20 }}</b><span class="qtiptooltip" style="display:none">{{ p.patch.name }}</span></a></td>
+        <td>{{ p.desc.desc }}</td>
+        <td>{{ p.desc.why }}</td>
+        <td>{{ p.desc.revision }}</td>
+        <td>
+            {% for m in p.desc.mantis %}
+            <a href={{ m }}>{{m}}</a>
+            {% endfor %}
+        </td>
+        <td>{{ p.desc.author }}</td>
+        <td>
+            {% if p.desc.is_mandatory %}
+            <div class="yellow"> Yes </div>
+            {% else %}
+            <div> No </div>
+            {% endif %}
+        </td>
+        <td>
+            {% if p.desc.attachment %}
+            <a href="{{ p.desc.attachment.url }}">Link</a></td>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<p>
+<a class="btn btn-default" href="{% url 'PCBTracker.views.add_patch' boardclass.id %}">New Patch</a>
+</p>
+
+<p>
+<a class="btn btn-default" href="{% url 'PCBTracker.views.edit_boardclass' boardclass.id %}">Edit Board-type</a>
+</p>
+
+{% endblock %}
