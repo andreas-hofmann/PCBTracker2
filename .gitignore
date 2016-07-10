@@ -90,3 +90,15 @@ ENV/
 
 # Pycharm settings
 .idea/*
+
+# local sqlite dbs
+*.sqlite3
+
+# uploaded attachments
+attachments/
+
+# vim swap files
+*.swp
+
+# collected static files
+PCBTracker/static/admin/
