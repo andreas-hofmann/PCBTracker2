@@ -67,3 +67,8 @@ table.patches th {
 table.patches td {
     text-align:center;
 }
+
+.some-margin {
+    margin-left: 10px;
+    margin-right: 10px;
+}
