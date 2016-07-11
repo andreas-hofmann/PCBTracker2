@@ -52,10 +52,10 @@
 
     <div class="navbar-btn navbar-right">
       {% if username %}
-      <a class="btn btn-success" id="logout" href="/logout/">Logout {{ username }}</a>
+      <a class="btn btn-success some-margin" id="logout" href="/logout/">Logout {{ username }}</a>
       {% else %}
-      <a class="btn btn-primary" id="login" href="/login/#">Login</a>
-      <a class="btn btn-primary" href="/register/">Register</a>
+      <a class="btn btn-primary some-margin" id="login" href="/login/#">Login</a>
+      <a class="btn btn-primary some-margin" href="/register/">Register</a>
       {% endif %}
     </div>
 
@@ -76,7 +76,7 @@
   </div>
   </nav>
 
-  <div class="container-fluid content" id="main">
+  <div class="container-fluid" id="main">
   {% block content %}{% endblock %}
   </div>
 </body>

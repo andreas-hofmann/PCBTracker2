@@ -11,20 +11,24 @@
 
 {% block content %}
 
-<h3>Search for boards</h3>
-<div id="search">
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Search for boards
+    </div>
     Search for CS-numbers, projects (COR...), serial numbers, patch numbers and board-names.<br>
     You can separate multiple patterns by commas.<br><br>
 
     <form method="post" action="{% url 'PCBTracker.views.search' %}">
-    {% csrf_token %}
-    {{ form.searchstring.label_tag }} {{ form.searchstring }}<br><br>
-    {{ form.search_boardname }} {{ form.search_boardname.label_tag }}<br>
-    {{ form.search_projectname }} {{ form.search_projectname.label_tag }}<br>
-    {{ form.search_serial }} {{ form.search_serial.label_tag }}<br>
-    {{ form.search_productnr }} {{ form.search_productnr.label_tag }}<br><br>
-    {{ form.search_patchnr }} {{ form.search_patchnr.label_tag }}<br><br>
-    <input type="submit" value="Go!" />
+        {% csrf_token %}
+        {{ form.searchstring.label_tag }} {{ form.searchstring }}
+        {{ form.search_boardname }} {{ form.search_boardname.label_tag }}
+        {{ form.search_projectname }} {{ form.search_projectname.label_tag }}
+        {{ form.search_serial }} {{ form.search_serial.label_tag }}
+        {{ form.search_productnr }} {{ form.search_productnr.label_tag }}
+        {{ form.search_patchnr }} {{ form.search_patchnr.label_tag }}
+        <div class="panel-footer">
+        <input type="submit" value="Go!" />
+        </div>
     </form>
 </div>
 

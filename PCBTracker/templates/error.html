@@ -2,9 +2,12 @@
 
 {% block content %}
 
-<p>
-<p><span class="label label-danger">{{ error }}</span></p>
-</p>
-<form><input type="button" value="Back" onClick="history.go(-1);return true;"></form>
+<div class="panel panel-danger">
+    <div class="panel-heading">Error</div>
+    {{ error }}
+    <div class="panel-footer">
+        <form><input type="button" value="Back" onClick="history.go(-1);return true;"></form>
+    </div>
+</div>
 
 {% endblock %}

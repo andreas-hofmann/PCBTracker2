@@ -1,15 +1,16 @@
 {% extends "base_skeleton.html" %}
 
 {% block content %}
-<h3>List of applied patches for "{{ board }}":</h3>
-
-{% for d in descs %}
-<p>
-<b>Description:</b> {{ d.desc.desc }}<br>
-<b>Cause for patch:</b> {{ d.desc.why }}<br>
-<b>Mantis ticket number:</b> {{ d.desc.mantis }}<br>
-<b>Revision:</b> {{ d.desc.revision }}<br>
-</p>
-{% endfor %}
+<div class="panel panel-primary">
+    <div class="panel-heading">List of applied patches for "{{ board }}":</div>
+    {% for d in descs %}
+    <p>
+    <b>Description:</b> {{ d.desc.desc }}<br>
+    <b>Cause for patch:</b> {{ d.desc.why }}<br>
+    <b>Mantis ticket number:</b> {{ d.desc.mantis }}<br>
+    <b>Revision:</b> {{ d.desc.revision }}<br>
+    </p>
+    {% endfor %}
+</div>
 
 {% endblock %}

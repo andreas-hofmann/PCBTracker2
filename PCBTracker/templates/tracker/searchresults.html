@@ -11,50 +11,69 @@
 
 {% block content %}
 
-<h3>Search results for '{{ searchstring }}':</h3>
+<div class="panel panel-primary">
+<div class="panel-heading">Search results for '{{ searchstring }}': </div>
 
-<p id="searchresults_patches">
+<div id="searchresults_patches" class="some-margin">
     {% if results_patches %}
-        Matches for Patch: <br>
+    <div class="panel panel-success">
+        <div class="panel-heading">Matches for Patch</div>
         {% for r in results_patches %}
         <a href={% url 'PCBTracker.views.patch' r.id %} >{{ r }}</a><br>
         {% endfor %}
+    </div>
     {% else %}
-        No patches found.
+    <div class="panel panel-warning">
+        <div class="panel-heading">No patches found</div>
+    </div>
     {% endif %}
-</p>
+</div>
 
-<p id="searchresults_projects">
+<div id="searchresults_projects" class="some-margin">
     {% if results_projects %}
-        Matches for Project:<br>
+    <div class="panel panel-success">
+        <div class="panel-heading">Matches for Project</div>
         {% for r in results_projects %}
         <a href={% url 'PCBTracker.views.board' r.id %} >{{ r }}</a><br>
         {% endfor %}
+    </div>
     {% else %}
-        No projects found.
+    <div class="panel panel-warning">
+        <div class="panel-heading">No projects found</div>
+    </div>
     {% endif %}
-</p>
+</div>
 
-<p id="searchresults_boardclasses">
+<div id="searchresults_boardclasses" class="some-margin">
     {% if results_boardclasses %}
-        Matches for BoardClass:<br>
+    <div class="panel panel-success">
+        <div class="panel-heading">Matches for BoardClass</div>
         {% for r in results_boardclasses %}
         <a href={% url 'PCBTracker.views.board' r.id %} >{{ r }}</a><br>
         {% endfor %}
+    </div>
     {% else %}
-        No boardclasses found.
+    <div class="panel panel-warning">
+        <div class="panel-heading">No boardclass found</div>
+    </div>
     {% endif %}
-</p>
+</div>
 
-<p id="searchresults_boards">
+<div id="searchresults_boards" class="some-margin">
     {% if results_boards %}
-        Matches for Board:<br>
+    <div class="panel panel-success">
+        <div class="panel-heading">Matches for Board</div>
         {% for r in results_boards %}
         <a href={% url 'PCBTracker.views.board' r.id %} >{{ r }}</a><br>
         {% endfor %}
+    </div>
     {% else %}
-        No boards found.
+    <div class="panel panel-warning">
+        <div class="panel-heading">No boards found</div>
+    </div>
     {% endif %}
-</p>
+</div>
+
+</div>
 
 {% endblock %}

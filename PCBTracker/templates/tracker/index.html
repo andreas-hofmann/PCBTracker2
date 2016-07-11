@@ -18,27 +18,31 @@ $(document).ready(function(){
 
 {% block content %}
 
-<h1>All Projects:</h1>
+<div class="panel panel-primary">
+    <div class="panel-heading">All Projects</div>
 
-{% for p in all_projects %}
-<div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu_{{ p.project.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-        <span class="caret"></span>
-        <b>{{ p.project.name }}</b> {{ p.project.desc }}
-    </button>
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenu_{{ p.project.id }}">
-        {% for b in p.boards %}
-        <li><a href="{% url 'PCBTracker.views.boards' b.id %}"><b>{{ b.name }}</b> {{ b.desc }}</a></li>
-        {% endfor %}
-        <li role="separator" class="divider"></li>
-        <li><a class="btn btn-default" href="{% url 'PCBTracker.views.add_boardclass' p.project.id %}">Add board-type</a></li>
-        <li><a class="btn btn-default" href="{% url 'PCBTracker.views.edit_project' p.project.id %}">Edit project</a></li>
-    </ul>
+    <div class="panel-body">
+    {% for p in all_projects %}
+    <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu_{{ p.project.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <span class="caret"></span>
+            <b>{{ p.project.name }}</b> {{ p.project.desc }}
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu_{{ p.project.id }}">
+            {% for b in p.boards %}
+            <li><a href="{% url 'PCBTracker.views.boards' b.id %}"><b>{{ b.name }}</b> {{ b.desc }}</a></li>
+            {% endfor %}
+            <li role="separator" class="divider"></li>
+            <li><a class="btn btn-default" href="{% url 'PCBTracker.views.add_boardclass' p.project.id %}">Add board-type</a></li>
+            <li><a class="btn btn-default" href="{% url 'PCBTracker.views.edit_project' p.project.id %}">Edit project</a></li>
+        </ul>
+    </div>
+    {% endfor %}
+    </div>
+
+    <div class="panel-footer">
+    <a class="btn btn-default" href="{% url 'PCBTracker.views.add_project' %}">Add Project</a>
+    </div>
 </div>
-{% endfor %}
-
-<br />
-
-<a class="btn btn-default" href="{% url 'PCBTracker.views.add_project' %}">Add Project</a>
 
 {% endblock %}

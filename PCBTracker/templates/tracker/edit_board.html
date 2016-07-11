@@ -2,32 +2,35 @@
 
 {% block content %}
 
-<h1>Edit board {{ board.csnr }}</h1>
-
-<form enctype="multipart/form-data" method="post" action="{% url 'PCBTracker.views.edit_board' board.id %}">
-    {% csrf_token %}
-    <div class="form-group">
-        <label for="id_csnr">Short name</label>
-        <input type="text" class="form-control" name="csnr" id="id_csnr">
-    </div>
-    <div class="form-group">
-        <label for="id_serial_top">Serial (top)</label>
-        <input type="text" class="form-control" name="serial_top" id="id_serial_top">
-    </div>
-    <div class="form-group">
-        <label for="id_serial_bottom">Serial (bottom)</label>
-        <input type="text" class="form-control" name="serial_bottom" id="id_serial_bottom">
-    </div>
-    <div class="form-group">
-        <label for="id_comment">Comment</label>
-        <textarea class="form-control" name="comment" id="id_comment"></textarea>
-    </div>
-    <div class="form-group">
-        <label for="id_attachment">Add attachment</label>
-        <input class="btn btn-default btn-file" type="file" name="attachment" id="id_attachment">
-    </div>
-    <button type="submit" class="btn btn-default" value="submit">Create</button>
-    <input type="hidden" name="next" value="{{ next }}" />
-</form>
+<div class="panel panel-primary">
+    <div class="panel-heading">Edit board {{ board.csnr }}</div>
+    <form enctype="multipart/form-data" method="post" action="{% url 'PCBTracker.views.edit_board' board.id %}">
+        {% csrf_token %}
+        <div class="form-group some-margin">
+            <label for="id_csnr">Short name</label>
+            <input type="text" class="form-control" name="csnr" id="id_csnr">
+        </div>
+        <div class="form-group some-margin">
+            <label for="id_serial_top">Serial (top)</label>
+            <input type="text" class="form-control" name="serial_top" id="id_serial_top">
+        </div>
+        <div class="form-group some-margin">
+            <label for="id_serial_bottom">Serial (bottom)</label>
+            <input type="text" class="form-control" name="serial_bottom" id="id_serial_bottom">
+        </div>
+        <div class="form-group some-margin">
+            <label for="id_comment">Comment</label>
+            <textarea class="form-control" name="comment" id="id_comment"></textarea>
+        </div>
+        <div class="form-group some-margin">
+            <label for="id_attachment">Add attachment</label>
+            <input class="btn btn-default btn-file" type="file" name="attachment" id="id_attachment">
+        </div>
+        <div class="panel-footer">
+            <button type="submit" class="btn btn-default" value="submit">Create</button>
+        </div>
+        <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+</div>
 
 {% endblock %}
