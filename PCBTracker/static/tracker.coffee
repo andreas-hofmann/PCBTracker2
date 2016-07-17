@@ -78,7 +78,13 @@ $ ->
         console.log error
 
 
-  #$(document).ready ->
+  $(document).ready ->
+    $('input[type="file"]').addClass('btn btn-default btn-file')
+    $('input[type="button"]').addClass('btn btn-default')
+    $('textarea').addClass('form-control')
+    $('input[type="text"]').addClass('form-control')
+    $('select').addClass('form-control')
+
   #  $('a.nav-button').each ->
   #    $(this).click ->
   #      navigate $(this).attr('id')
