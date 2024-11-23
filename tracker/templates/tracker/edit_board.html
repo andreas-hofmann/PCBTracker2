@@ -3,10 +3,11 @@
 {% block content %}
 
 <div class="panel panel-primary">
-    <div class="panel-heading">Edit project</div>
-    <form method="post" action="{% url 'PCBTracker.views.edit_project' project.id %}">
+    <div class="panel-heading">Edit board {{ board.csnr }}</div>
+    <form enctype="multipart/form-data" method="post" action="{% url 'board-edit' board.id %}">
         {% csrf_token %}
         {% include "form_template.html" %}
     </form>
 </div>
+
 {% endblock %}

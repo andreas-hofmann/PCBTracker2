@@ -18,7 +18,7 @@
     Search for CS-numbers, projects (COR...), serial numbers, patch numbers and board-names.<br>
     You can separate multiple patterns by commas.<br><br>
 
-    <form method="post" action="{% url 'PCBTracker.views.search' %}">
+    <form method="post" action="{% url 'search' %}">
         {% csrf_token %}
         {{ form.searchstring.label_tag }} {{ form.searchstring }}
         {{ form.search_boardname }} {{ form.search_boardname.label_tag }}

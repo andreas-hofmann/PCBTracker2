@@ -5,7 +5,7 @@
 <div class="panel panel-primary">
     <div class="panel-heading">Register</div>
 
-    <form method="post" action="{% url 'PCBTracker.views.do_register' %}">
+    <form method="post" action="{% url 'register' %}">
         {% csrf_token %}
         <div class="form-group some-margin">
             <label for="id_username">Username *</label>

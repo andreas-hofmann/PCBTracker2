@@ -13,62 +13,62 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf.urls import include, url
+from django.urls import include, re_path
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 
-from PCBTracker import views
+from tracker import views
 
 admin.autodiscover()
 
 urlpatterns = [
     # View (single) boards
-    url(r'^board/(?P<class_id>\d+)/$', views.boards),
-    url(r'^board/detail/(?P<board_id>\d+)/$', views.board),
-    url(r'^board/new/(?P<class_id>\d+)/$', views.add_board),
-    url(r'^board/edit/(?P<board_id>\d+)/$', views.edit_board),
-    url(r'^board/export_patches/(?P<status_id>\d+)/$', views.export_patches),
-    url(r'^board/$', views.boards),
+    re_path(r'^board/(?P<class_id>\d+)/$', views.boards, name='board'),
+    re_path(r'^board/detail/(?P<board_id>\d+)/$', views.board, name='board-details'),
+    re_path(r'^board/new/(?P<class_id>\d+)/$', views.add_board, name='board-new'),
+    re_path(r'^board/edit/(?P<board_id>\d+)/$', views.edit_board, name='board-edit'),
+    re_path(r'^board/export_patches/(?P<status_id>\d+)/$', views.export_patches, name='patches-export'),
+    re_path(r'^board/$', views.boards, name='boards'),
 
     # View (single) patches
-    url(r'^patch/(?P<patch_id>\d+)/$', views.patch),
-    url(r'^patch/new/(?P<class_id>\d+)/$', views.add_patch),
-    url(r'^patch/edit/(?P<patch_id>\d+)/$', views.edit_patch),
+    re_path(r'^patch/(?P<patch_id>\d+)/$', views.patch, name='patch'),
+    re_path(r'^patch/new/(?P<class_id>\d+)/$', views.add_patch, name='patch-new'),
+    re_path(r'^patch/edit/(?P<patch_id>\d+)/$', views.edit_patch, name='patch-edit'),
 
     # Add new project
-    url(r'^project/new/$', views.add_project),
-    url(r'^project/edit/(?P<project_id>\d+)/$', views.edit_project),
+    re_path(r'^project/new/$', views.add_project, name='project-new'),
+    re_path(r'^project/edit/(?P<project_id>\d+)/$', views.edit_project, name='project-edit'),
 
     # Add new boardclass
-    url(r'^boardclass/new/(?P<project_id>\d+)/$', views.add_boardclass),
-    url(r'^boardclass/edit/(?P<class_id>\d+)/$', views.edit_boardclass),
+    re_path(r'^boardclass/new/(?P<project_id>\d+)/$', views.add_boardclass, name='boardclass-new'),
+    re_path(r'^boardclass/edit/(?P<class_id>\d+)/$', views.edit_boardclass, name='boardclass-edit'),
 
     # Add new event for a board
-    url(r'^event/new/(?P<board_id>\d+)/$', views.add_event),
+    re_path(r'^event/new/(?P<board_id>\d+)/$', views.add_event, name='event-new'),
 
     # Claim board (as user) or change location
-    url(r'^claim/(?P<board_id>\d+)/$', views.claim_board),
-    url(r'^newlocation/(?P<board_id>\d+)/$', views.add_location),
+    re_path(r'^claim/(?P<board_id>\d+)/$', views.claim_board, name='claim'),
+    re_path(r'^newlocation/(?P<board_id>\d+)/$', views.add_location, name='location-new'),
 
     # Search function with raw input
-    url(r'^search_raw/(?P<searchstring>.+)$', views.raw_search),
+    re_path(r'^search_raw/(?P<searchstring>.+)$', views.raw_search, name='search-raw'),
 
     # Search function
-    url(r'^search/$', views.search),
+    re_path(r'^search/$', views.search, name='search'),
 
     # Login and registration
-    url(r'^register/$', views.do_register),
-    url(r'^accounts/login/$', auth_views.login, {'template_name': 'login.html' }),
-    url(r'^accounts/logout/$', auth_views.logout, {'template_name': 'logout.html' }),
+    re_path(r'^register/$', views.do_register, name='register'),
+    re_path(r'^accounts/login/$', auth_views.LoginView.as_view(template_name='login.html' ), name='accounts-login'),
+    re_path(r'^accounts/logout/$', auth_views.LogoutView.as_view(template_name='logout.html' ), name='accounts-logout'),
 
-    url(r'^login/$', auth_views.login, {'template_name': 'login.html' }),
-    url(r'^logout/$', auth_views.logout, {'template_name': 'logout.html' }),
+    re_path(r'login/$', auth_views.LoginView.as_view(template_name='login.html' ), name='login'),
+    re_path(r'logout/$', auth_views.LogoutView.as_view(template_name='logout.html' ), name='logout'),
 
     # Uncomment the next line to enable the admin:
-    url(r'^admin/', include(admin.site.urls)),
+    re_path(r'admin/', admin.site.urls),
 
     # Fall through to Main Page
-    url(r'^main/$', views.reset_index),
+    re_path(r'main/$', views.reset_index, name='main'),
 
-    url(r'^', views.index)
+    re_path(r'^', views.index, name='index')
 ]

@@ -4,7 +4,7 @@
 
 <div class="panel panel-primary">
     <div class="panel-heading">Edit patch {{ patch.name }} for {{ boardclass.name }}-board</div>
-    <form enctype="multipart/form-data" method="post" action="{% url 'PCBTracker.views.edit_patch' patch.id %}">
+    <form enctype="multipart/form-data" method="post" action="{% url 'patch-edit' patch.id %}">
         {% csrf_token %}
         {% include "form_template.html" %}
     </form>

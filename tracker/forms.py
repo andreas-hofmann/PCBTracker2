@@ -40,7 +40,7 @@ class PatchForm(forms.Form):
     name = forms.CharField(max_length=30)
     desc = forms.CharField(max_length=2000, widget=forms.Textarea(), required=False)
     why = forms.CharField(max_length=2000, widget=forms.Textarea(), required=False)
-    mandatory = forms.NullBooleanField('Mandatory')
+    mandatory = forms.NullBooleanField()
     mantis = MantisField(max_length=2000, widget=forms.Textarea(), required=False)
     attachment = forms.FileField(widget=forms.FileInput(), required=False)
 

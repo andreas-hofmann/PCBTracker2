@@ -19,7 +19,7 @@
     <div class="panel panel-success">
         <div class="panel-heading">Matches for Patch</div>
         {% for r in results_patches %}
-        <a href={% url 'PCBTracker.views.patch' r.id %} >{{ r }}</a><br>
+        <a href={% url 'patch' r.id %} >{{ r }}</a><br>
         {% endfor %}
     </div>
     {% else %}
@@ -34,7 +34,7 @@
     <div class="panel panel-success">
         <div class="panel-heading">Matches for Project</div>
         {% for r in results_projects %}
-        <a href={% url 'PCBTracker.views.board' r.id %} >{{ r }}</a><br>
+        <a href={% url 'board' r.id %} >{{ r }}</a><br>
         {% endfor %}
     </div>
     {% else %}
@@ -49,7 +49,7 @@
     <div class="panel panel-success">
         <div class="panel-heading">Matches for BoardClass</div>
         {% for r in results_boardclasses %}
-        <a href={% url 'PCBTracker.views.board' r.id %} >{{ r }}</a><br>
+        <a href={% url 'board' r.id %} >{{ r }}</a><br>
         {% endfor %}
     </div>
     {% else %}
@@ -64,7 +64,7 @@
     <div class="panel panel-success">
         <div class="panel-heading">Matches for Board</div>
         {% for r in results_boards %}
-        <a href={% url 'PCBTracker.views.board' r.id %} >{{ r }}</a><br>
+        <a href={% url 'board' r.id %} >{{ r }}</a><br>
         {% endfor %}
     </div>
     {% else %}

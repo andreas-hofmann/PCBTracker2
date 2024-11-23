@@ -11,7 +11,7 @@ class Project(models.Model):
         return unicode(self.name)
 
 class BoardClass(models.Model):
-    projectid = models.ForeignKey(Project)
+    projectid = models.ForeignKey(Project, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
     productnr = models.CharField(max_length=30)
     desc = models.CharField(max_length=200, blank=True)
@@ -29,14 +29,14 @@ class BoardClass(models.Model):
         return ret
 
 class Board(models.Model):
-    classid = models.ForeignKey(BoardClass)
+    classid = models.ForeignKey(BoardClass, on_delete=models.CASCADE)
     csnr = models.CharField(max_length=30)
     revision = models.CharField(max_length=30, blank=True)
     comment = models.CharField(max_length=2000, blank=True)
     serial_top = models.CharField(max_length=30, blank=True)
     serial_bottom = models.CharField(max_length=30, blank=True)
     date = models.DateTimeField('Created', auto_now=True)
-    defect = models.NullBooleanField('Defect', default=False, null=True)
+    defect = models.BooleanField('Defect', default=False, null=True)
     swversion = models.CharField(max_length=30, blank=True, null=True)
     attachment = models.FileField(upload_to="attachments/board/%Y-%m-%d-%H-%M-%S/")
 
@@ -132,8 +132,8 @@ class Board(models.Model):
         return True
 
 class BoardStatus(models.Model):
-    boardid = models.ForeignKey(Board)
-    author = models.ForeignKey(User)
+    boardid = models.ForeignKey(Board, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     patches = models.CharField(max_length=2000)
     date = models.DateTimeField('Modified', auto_now=True)
     location = models.CharField('Current Location', max_length=50)
@@ -160,7 +160,7 @@ class BoardStatus(models.Model):
         return result
 
 class Patch(models.Model):
-    classid = models.ForeignKey(BoardClass)
+    classid = models.ForeignKey(BoardClass, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
 
     def get_latest_rev(self):
@@ -173,11 +173,11 @@ class Patch(models.Model):
         return unicode("#" + str(self.id) + " - " + self.name + " (" + self.classid.__unicode__() + ")")
 
 class PatchDesc(models.Model):
-    patchid = models.ForeignKey(Patch)
-    author = models.ForeignKey(User)
+    patchid = models.ForeignKey(Patch, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     desc = models.CharField(max_length=2000, blank=True)
     why = models.CharField(max_length=2000, blank=True)
-    mandatory = models.NullBooleanField('Mandatory', null=True)
+    mandatory = models.BooleanField('Mandatory', null=True)
     date = models.DateTimeField('Modified', auto_now=True)
     mantis = models.CharField(max_length=2000, blank=True)
     attachment = models.FileField(upload_to="attachments/patch/%Y-%m-%d-%H-%M-%S/")
@@ -193,8 +193,8 @@ class PatchDesc(models.Model):
             return None
 
 class Event(models.Model):
-    boardid = models.ForeignKey(Board)
-    author = models.ForeignKey(User)
+    boardid = models.ForeignKey(Board, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField('Date', auto_now=True)
     desc = models.CharField(max_length=2000)
 
@@ -202,7 +202,7 @@ class Event(models.Model):
         return unicode(str(self.id) + ": changed on " + str(self.date) + ": " + self.boardid.__unicode__())
 
 class Location(models.Model):
-    boardid = models.ForeignKey(Board)
+    boardid = models.ForeignKey(Board, on_delete=models.CASCADE)
     date = models.DateTimeField('Date', auto_now=True)
     location = models.CharField(max_length=200)
 

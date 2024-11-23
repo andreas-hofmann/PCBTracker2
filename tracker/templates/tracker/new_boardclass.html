@@ -3,9 +3,9 @@
 {% block content %}
 
 <div class="panel panel-primary">
-    <div class="panel-heading">Create new project</div>
+    <div class="panel-heading">Create new board-type for project {{ project.name }}</div>
 
-    <form method="post" action="{% url 'PCBTracker.views.add_project' %}">
+    <form method="post" action="{% url 'boardclass-new' project.id %}">
         {% csrf_token %}
         {% include "form_template.html" %}
     </form>

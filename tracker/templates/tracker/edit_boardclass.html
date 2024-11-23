@@ -4,7 +4,7 @@
 
 <div class="panel panel-primary">
     <div class="panel-heading">Edit board-type for project {{ boardclass.projectid.name }}</div>
-    <form method="post" action="{% url 'PCBTracker.views.edit_boardclass' boardclass.id %}">
+    <form method="post" action="{% url 'boardclass-edit' boardclass.id %}">
         {% csrf_token %}
         {% include "form_template.html" %}
     </form>

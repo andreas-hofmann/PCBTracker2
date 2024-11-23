@@ -1,14 +1,14 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.template import RequestContext
 
-from PCBTracker.models import *
-from PCBTracker.forms import *
+from tracker.models import *
+from tracker.forms import *
 
 import re
 
 def get_username(request):
     username = None
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         username = request.user.username
     return username
 
@@ -18,7 +18,7 @@ def my_render_to_response(template, data, request):
             'username': get_username(request),
     }
     d.update(data)
-    return render_to_response(template, d, context_instance=RequestContext(request))
+    return render(request, template, d)
 
 def get_patchdescs(class_id=0):
     patches = Patch.objects.filter(classid = class_id)
@@ -33,7 +33,7 @@ def get_patchdescs(class_id=0):
     return patchdescs
 
 def search_board(searchstring="", search_boardname=True, search_projectname=True,
-                 search_serial=True, search_productnr=True, search_patch=True):
+                    search_serial=True, search_productnr=True, search_patch=True):
     results = {}
     results['projects'] = []
     results['boards'] = []
@@ -85,7 +85,7 @@ def search_board(searchstring="", search_boardname=True, search_projectname=True
                 pass
 
     # Only return unique results
-    for k in results.iterkeys(): # FIXME: Crash with Django 1.8
+    for k in results.keys():
         results[k] = list(set(results[k]))
 
     return results

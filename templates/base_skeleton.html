@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 
-{% load staticfiles %}
+{% load static %}
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/basic/jquery.qtip.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/basic/jquery.qtip.min.css" type="text/css" rel="stylesheet" />
@@ -12,7 +12,7 @@
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
-<script type="text/javascript" src="http://coffeescript.org/extras/coffee-script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/coffeescript@2.7.0/lib/coffeescript-browser-compiler-legacy/coffeescript.min.js"></script>
 
 <script type="text/coffeescript" src="{% static 'tracker.coffee' %}"></script>
 <link rel="stylesheet" href="{% static 'tracker.css' %}">
@@ -59,7 +59,7 @@
       {% endif %}
     </div>
 
-    <form class="navbar-form navbar-right" role="search" method="post" action="{% url 'PCBTracker.views.search' %}">
+    <form class="navbar-form navbar-right" role="search" method="post" action="{% url 'search' %}">
       {% csrf_token %}
       <div class="form-group">
         <input type="text" class="form-control" placeholder="Search">

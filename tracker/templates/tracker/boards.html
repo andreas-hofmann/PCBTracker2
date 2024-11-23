@@ -55,7 +55,7 @@
     </div>
 
     <div class="panel-footer">
-        <a class="btn btn-default" href="{% url 'PCBTracker.views.add_board' boardclass.id %}">New Board</a>
+        <a class="btn btn-default" href="{% url 'board-new' boardclass.id %}">New Board</a>
     </div>
 </div>
 
@@ -104,12 +104,12 @@
     </div>
 
     <div class="panel-footer">
-        <a class="btn btn-default" href="{% url 'PCBTracker.views.add_patch' boardclass.id %}">New Patch</a>
+        <a class="btn btn-default" href="{% url 'patch-new' boardclass.id %}">New Patch</a>
     </div>
 </div>
 
 <p>
-<a class="btn btn-default" href="{% url 'PCBTracker.views.edit_boardclass' boardclass.id %}">Edit Board-type</a>
+<a class="btn btn-default" href="{% url 'boardclass-edit' boardclass.id %}">Edit Board-type</a>
 </p>
 
 {% endblock %}

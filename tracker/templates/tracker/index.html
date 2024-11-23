@@ -30,18 +30,18 @@ $(document).ready(function(){
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu_{{ p.project.id }}">
             {% for b in p.boards %}
-            <li><a href="{% url 'PCBTracker.views.boards' b.id %}"><b>{{ b.name }}</b> {{ b.desc }}</a></li>
+            <li><a href="{% url 'board' b.id %}"><b>{{ b.name }}</b> {{ b.desc }}</a></li>
             {% endfor %}
             <li role="separator" class="divider"></li>
-            <li><a class="btn btn-default" href="{% url 'PCBTracker.views.add_boardclass' p.project.id %}">Add board-type</a></li>
-            <li><a class="btn btn-default" href="{% url 'PCBTracker.views.edit_project' p.project.id %}">Edit project</a></li>
+            <li><a class="btn btn-default" href="{% url 'boardclass-new' p.project.id %}">Add board-type</a></li>
+            <li><a class="btn btn-default" href="{% url 'project-edit' p.project.id %}">Edit project</a></li>
         </ul>
     </div>
     {% endfor %}
     </div>
 
     <div class="panel-footer">
-    <a class="btn btn-default" href="{% url 'PCBTracker.views.add_project' %}">Add Project</a>
+    <a class="btn btn-default" href="{% url 'project-new' %}">Add Project</a>
     </div>
 </div>
 

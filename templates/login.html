@@ -4,7 +4,7 @@
 
 <div class="panel panel-primary">
     <div class="panel-heading">Login</div>
-    <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+    <form method="post" action="{% url 'accounts-login' %}">
         {% csrf_token %}
         <div class="form-group some-margin">
             <label for="id_username">Username</label>

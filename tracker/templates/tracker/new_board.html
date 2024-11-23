@@ -5,7 +5,7 @@
 <div class="panel panel-primary">
     <div class="panel-heading">Add new {{ boardclass.name }}-board</div>
 
-    <form enctype="multipart/form-data" method="post" action="{% url 'PCBTracker.views.add_board' boardclass.id %}">
+    <form enctype="multipart/form-data" method="post" action="{% url 'board-new' boardclass.id %}">
     {% csrf_token %}
     {% include "form_template.html" %}
 </form>

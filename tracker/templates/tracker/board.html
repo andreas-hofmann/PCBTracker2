@@ -52,7 +52,7 @@ $(document).ready(function(){
 
 {% block content %}
 
-<h1><a href="{% url 'PCBTracker.views.boards' board.classid.id %}">{{ board.classid.name }} {{ board.csnr }}</a></h1>
+<h1><a href="{% url 'board' board.classid.id %}">{{ board.classid.name }} {{ board.csnr }}</a></h1>
 
 <h2 id="boarddetails"><div class="mousepointer">Details for {{ board.classid.name }} {{ board.csnr }}:</div></h2>
 <div class="board" id="boarddetails">
@@ -99,7 +99,7 @@ $(document).ready(function(){
         </tr>
     </table>
 
-    <a class="btn btn-default" href="{% url 'PCBTracker.views.edit_board' board.id %}">Edit</a>
+    <a class="btn btn-default" href="{% url 'board-edit' board.id %}">Edit</a>
 </div>
 
 <h2 id="boardevents"><div class="mousepointer">Events for {{ board.classid.name }} {{ board.csnr }}:</div></h2>
@@ -124,7 +124,7 @@ $(document).ready(function(){
     </a>
 
     <div id="newevent">
-        <form method="post" action="{% url 'PCBTracker.views.add_event' board.id %}">
+        <form method="post" action="{% url 'event-new' board.id %}">
         {% csrf_token %}
         <table>
         <tr>
@@ -159,7 +159,7 @@ $(document).ready(function(){
     or
     <a class="btn btn-default" href="/claim/{{ board.id }}/">Claim board</a>
     <div id="newlocation">
-        <form method="post" action="{% url 'PCBTracker.views.add_location' board.id %}">
+        <form method="post" action="{% url 'location-new' board.id %}">
         {% csrf_token %}
         <table>
         <tr>
@@ -195,7 +195,7 @@ $(document).ready(function(){
     {% endfor %}
     <td><div class="qtiptooltip" id="qtiptooltip">{{ s.s.location|truncatechars:10 }}<span class="qtiptooltip" style="display:none">{{ s.s.location }}</span></div></td>
     <td><div class="qtiptooltip" id="qtiptooltip">{{ s.s.author|truncatechars:13 }}<span class="qtiptooltip" style="display:none">{{ s.s.author }}</span></div></td>
-    <td><a class="btn btn-default" href="{% url 'PCBTracker.views.export_patches' s.id %}">Export</a></td>
+    <td><a class="btn btn-default" href="{% url 'patches-export' s.id %}">Export</a></td>
     <td>{{ s.s.date }}</td>
 </tr>
 {% endfor %}

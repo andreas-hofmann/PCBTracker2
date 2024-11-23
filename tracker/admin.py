@@ -1,4 +1,4 @@
-from PCBTracker.models import *
+from tracker.models import *
 from django.contrib import admin
 
 admin.site.register(Project)

@@ -1,13 +1,13 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.core.files.base import ContentFile
 from django.contrib.auth.models import Group
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from PCBTracker.helpers import *
-from PCBTracker.models import *
-from PCBTracker.forms import *
+from tracker.helpers import *
+from tracker.models import *
+from tracker.forms import *
 
 import re
 
@@ -221,9 +221,9 @@ def add_project(request):
             name = form.cleaned_data['name'].upper()
             desc = form.cleaned_data['desc']
 
-            nr = re.match("^[Cc]?[Oo]?[Rr]?(\d+)", name)
+            nr = re.match("^(\d+)", name)
             if nr:
-                name = "COR" + str(nr.group(1))
+                name = str(nr.group(1))
             else:
                 return my_render_to_response("error.html", {
                     'error': 'Invalid nr entered!',
@@ -769,7 +769,7 @@ def export_patches(request, status_id=''):
 
     descs = []
 
-    for p in patches.iterkeys():
+    for p in patches.keys():
         desc = PatchDesc.objects.filter(patchid=p)
 
         try:
